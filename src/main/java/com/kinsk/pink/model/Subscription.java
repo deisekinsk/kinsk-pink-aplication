@@ -28,7 +28,5 @@ public class Subscription {
     private Date endDate;
 
 
-
-
 }
 
