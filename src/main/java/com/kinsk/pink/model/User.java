@@ -9,24 +9,22 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "PINKUSER")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
 
-    @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
     @Column(name = "NAME")
     private String name;
-    @Column(name = "EMAIL")
-    private String email;
     @Column(name = "PASS")
     private String pass;
-    @Column(name = "STARTUSER")
+    @Column(name = "STARTER")
     private Date startUser;
 
 }
