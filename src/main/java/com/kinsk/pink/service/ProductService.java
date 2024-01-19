@@ -5,7 +5,6 @@ import com.kinsk.pink.repository.ProductRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
@@ -15,37 +14,46 @@ import java.util.Optional;
 public class ProductService {
 
     @Autowired
-    private ProductRespository productRespository;
+    private ProductRespository productRepository;
 
-    public ProductService(ProductRespository productRespository) {
-        this.productRespository = productRespository;
+    public ProductService(ProductRespository productRepository) {
+        this.productRepository = productRepository;
     }
-
     public List<Product> findAll(){
-        return productRespository.findAll();
+        return productRepository.findAll();
     }
-
-    @GetMapping(value = "/{ID}")
     public Product findProductById (@PathVariable Long id)
             throws NotFoundException {
 
         if (id!=null){
-            Optional<Product> product = productRespository.findById(id);
+            Optional<Product> product = productRepository.findById(id);
             return product.get();
         }else throw new NotFoundException();
 
     }
 
+    public Product save (Product product){
+        return productRepository.save(product);
+    }
 
+    public Product update (Product product) throws NotFoundException {
+        Product p = findProductById(product.getId());
+        return productRepository.save(conversion(product));
+    }
 
+    public Product conversion (Product product){
+        Product p = new Product();
+        p.setId(product.getId());
+        p.setName(product.getName());
+        p.setPriceRoot(product.getPriceRoot());
+        return p;
+    }
 
-
-//    public save (){}
-//    public update (){}
-//    public update (){}
-
-
-
-
+    public void deleteById (@PathVariable Long id) throws NotFoundException {
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (productOptional.isPresent()) {
+            productRepository.deleteById(id);
+        } else throw new NotFoundException();
+    }
 
 }

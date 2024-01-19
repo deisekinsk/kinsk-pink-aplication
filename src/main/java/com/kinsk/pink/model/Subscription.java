@@ -20,13 +20,17 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
-    @Column(name = "Status")
-    private String Status; //activate cancel pending expiated
     @Column(name = "STARTDATE")
     private Date startDate;
     @Column(name = "ENDDATE")
     private Date endDate;
 
+//    @Column(name = "Status")
+//    private SubscriptionSTS Status; //activate cancel pending expiated
+//    @Column(name = "PINKUSER")
+//    private User user;
+//    @Column(name = "Status")
+//    private Product product;
 
 }
 

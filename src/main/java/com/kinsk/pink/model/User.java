@@ -26,5 +26,4 @@ public class User {
     private String pass;
     @Column(name = "STARTER")
     private Date startUser;
-
 }

@@ -17,7 +17,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
-    @Column(name = "PRODUCT")
+    @Column(name = "NAME")
     private String name; //PINK PURPLE BLUE
     @Column(name = "PRICE")
     private Double priceRoot;

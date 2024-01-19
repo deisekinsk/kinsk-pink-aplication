@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,18 +22,40 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<Product>> findAllProducts(){
-        System.out.println("FindALL");
+        System.out.println("R READ");
         return new ResponseEntity<List<Product>>(productService.findAll(),HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<Product>> findById(@PathVariable Long ID)
+    public ResponseEntity<List<Product>> findById(@PathVariable Long id)
             throws ChangeSetPersister.NotFoundException {
-
-        System.out.println("FindById");
-        return new ResponseEntity(productService.findProductById(ID).getId(),
+        System.out.println("R READ BY ID");
+        return new ResponseEntity(productService.findProductById(id),
                 HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product)
+            throws ChangeSetPersister.NotFoundException {
+        System.out.println("U UPDATE");
+        return new ResponseEntity<Product>(productService.update(product),HttpStatus.OK);
+    }
+    @PostMapping
+    public ResponseEntity<Product> postProduct(@RequestBody Product product){
+        System.out.println("C CREATE");
+        return new ResponseEntity<Product>(productService.save(product),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Product> deleteById(@PathVariable Long id)
+            throws ChangeSetPersister.NotFoundException {
+        if (id != null) {
+            System.out.println("D DELETE");
+            productService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else throw new ChangeSetPersister.NotFoundException();
+
     }
 }
