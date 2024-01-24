@@ -1,10 +1,7 @@
 package com.kinsk.pink.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -24,6 +21,11 @@ public class User {
     private String name;
     @Column(name = "PASS")
     private String pass;
+
     @Column(name = "STARTER")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startUser;
+    @Column(name = "LAST_UPDATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdate;
 }

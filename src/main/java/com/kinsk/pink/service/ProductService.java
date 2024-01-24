@@ -21,6 +21,7 @@ public class ProductService {
     }
     public List<Product> findAll(){
         return productRepository.findAll();
+
     }
     public Product findProductById (@PathVariable Long id)
             throws NotFoundException {
@@ -35,6 +36,7 @@ public class ProductService {
     public Product save (Product product){
         return productRepository.save(product);
     }
+
 
     public Product update (Product product) throws NotFoundException {
         Product p = findProductById(product.getId());
