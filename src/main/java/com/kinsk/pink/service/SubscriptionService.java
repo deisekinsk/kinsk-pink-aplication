@@ -1,7 +1,9 @@
 package com.kinsk.pink.service;
 
+import com.kinsk.pink.model.Product;
 import com.kinsk.pink.model.Subscription;
 import com.kinsk.pink.model.User;
+import com.kinsk.pink.repository.ProductRespository;
 import com.kinsk.pink.repository.SubscriptionRespository;
 import com.kinsk.pink.repository.UserRespository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +20,10 @@ public class SubscriptionService {
 
     @Autowired
     private SubscriptionRespository subsRepository;
-
    @Autowired
    private UserRespository userRespository;
+   @Autowired
+   private ProductRespository productRespository;
 
 //    public SubscriptionService(SubscriptionRespository subsRepository) {
 //        this.subsRepository = subsRepository;
@@ -49,7 +52,18 @@ public class SubscriptionService {
         if (user != null && user.getId() != null) {
             Long userId = user.getId();
             Optional<User> existingUserOpt = userRespository.findById(userId);
+            //subscription -> subscription.setUser(user)
+            //subscription é uma instância de Subscription, e você está chamando o método setUser dessa instância.
             existingUserOpt.ifPresent(subscription::setUser);
+        }
+
+        Product product = subscription.getProduct();
+        if (product != null && product.getId() != null) {
+            Long productId = product.getId();
+            Optional<Product> existingProductOpt = productRespository.findById(productId);
+            //subscription -> subscription.setUser(user)
+            //subscription é uma instância de Subscription, e você está chamando o método setUser dessa instância.
+            existingProductOpt.ifPresent(subscription::setProduct);
         }
 
         return subsRepository.save(subscription);
