@@ -35,6 +35,7 @@ public class UserService {
     }
 
     public User save(User user) {
+        //set a date
         if(user.getStartUser() == null){
             user.setStartUser(new Date());
         }

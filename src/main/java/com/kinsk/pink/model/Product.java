@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "PRODUCT")
 @Getter
@@ -21,4 +23,9 @@ public class Product {
     private String name; //PINK PURPLE BLUE
     @Column(name = "PRICE")
     private Double priceRoot;
+
+    //Collection
+    @OneToMany(mappedBy = "product")
+    private List<Subscription> subscriptions;
+
 }

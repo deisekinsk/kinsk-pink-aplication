@@ -25,12 +25,17 @@ public class Subscription {
     @Column(name = "ENDDATE")
     private Date endDate;
 
-//    @Column(name = "Status")
-//    private SubscriptionSTS Status; //activate cancel pending expiated
-//    @Column(name = "PINKUSER")
-//    private User user;
-//    @Column(name = "Status")
-//    private Product product;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Status")
+    private SubscriptionSTS status; //activate cancel pending expiated
+
+    @OneToOne
+    @JoinColumn(name = "PINKUSER_ID")
+    private User user;
+
+    @OneToOne
+    @JoinColumn(name = "PRODUCT_ID")
+    private Product product;
 
 }
 

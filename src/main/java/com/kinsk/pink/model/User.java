@@ -28,4 +28,7 @@ public class User {
     @Column(name = "LAST_UPDATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
+
+    @OneToOne(mappedBy = "user")
+    private Subscription subscription;
 }
