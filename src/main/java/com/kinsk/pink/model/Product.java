@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,15 +18,14 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "PRODUCT_ID")
     private Long id;
     @Column(name = "NAME")
-    private String name; //PINK PURPLE BLUE
-    @Column(name = "PRICE")
-    private Double priceRoot;
+    private String name;
+
 
     //Collection
-    @OneToMany(mappedBy = "product")
-    private List<Subscription> subscriptions;
+//    @OneToMany(mappedBy = "product")
+//    private List<Subscription> subscriptions = new ArrayList<>();
 
 }

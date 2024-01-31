@@ -20,22 +20,27 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
+
     @Column(name = "STARTDATE")
     private Date startDate;
     @Column(name = "ENDDATE")
     private Date endDate;
+    @Column(name = "LAST_UPDATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Status")
-    private SubscriptionSTS status; //activate cancel pending expiated
+    private SubscriptionSTS status; //ACTIVATE, CANCEL,PENDING
 
-    @OneToOne
-    @JoinColumn(name = "PINKUSER_ID")
-    private User user;
+//    @OneToOne
+//    @PrimaryKeyJoinColumn(name = "USER_ID")
+//    private User user;
+//
+//    @OneToOne
+//    @PrimaryKeyJoinColumn(name = "PRODUCT_ID")
+//    private Product product;
 
-    @OneToOne
-    @JoinColumn(name = "PRODUCT_ID")
-    private Product product;
 
 }
 

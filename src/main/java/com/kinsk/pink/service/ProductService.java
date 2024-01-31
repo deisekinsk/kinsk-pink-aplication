@@ -47,7 +47,6 @@ public class ProductService {
         Product p = new Product();
         p.setId(product.getId());
         p.setName(product.getName());
-        p.setPriceRoot(product.getPriceRoot());
         return p;
     }
 

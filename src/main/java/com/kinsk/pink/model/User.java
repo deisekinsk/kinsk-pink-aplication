@@ -15,7 +15,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "USER_ID")
     private Long id;
     @Column(name = "NAME")
     private String name;
@@ -29,6 +29,6 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
 
-    @OneToOne(mappedBy = "user")
-    private Subscription subscription;
+//    @OneToOne(mappedBy = "user")
+//    private Subscription subscription;
 }
