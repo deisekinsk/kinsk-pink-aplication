@@ -1,5 +1,6 @@
 package com.kinsk.pink.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,8 +25,8 @@ public class Product {
     private String name;
 
 
-    //Collection
-//    @OneToMany(mappedBy = "product")
-//    private List<Subscription> subscriptions = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    @Schema(hidden = true)
+    private List<Subscription> subscriptions = new ArrayList<>();
 
 }
