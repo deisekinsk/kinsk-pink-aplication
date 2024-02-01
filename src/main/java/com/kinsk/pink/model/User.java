@@ -19,7 +19,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID")
+    @Schema(hidden = true)
     private Long id;
+
     @Column(name = "NAME")
     private String name;
     @Column(name = "PASS")

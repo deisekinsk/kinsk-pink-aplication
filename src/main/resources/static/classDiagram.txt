@@ -1,0 +1,59 @@
+Pink aplication
+
+    Um usuário pode adquirir vários produtos.
+    Ao adquirir um produto, é obrigatório ter uma assinatura.
+    Cada assinatura é associada a uma categoria de preço específica.
+
+    Um User pode ter várias Subscription.
+    Um Product pode ter várias Subscription.
+    Cada Subscription pertence a uma PricingCategory específica, que representa a categoria de preço da assinatura.
+
+
+
+
+classDiagram
+  class User {
+    +Long id
+    +String name
+    +String pass
+    +Date startUser
+    +Date lastUpdate
+    -List<Subscription> subscriptions 
+  }
+
+  class Product {
+    +Long id
+    +String name
+    +List<Subscription> subscriptions
+  }
+
+  class SubscriptionStatus {
+    ACTIVATE
+    CANCEL
+    PENDING
+  }
+
+  class Subscription {
+    +Long id
+    +Date startDate
+    +Date endDate
+    +Date lastUpdate
+    +String status
+    -User user
+    -Product product
+    -SubscriptionStatus subscriptionStatus
+    -PricingCategory pricingCategory
+  }
+
+  class PricingCategory {
+    +Long id
+    +String name
+    +double fixedRate
+    +double discount
+    +double usageRate
+  }
+
+  User "1" -- "0..*" Subscription : has
+  Product "1" -- "0..*" Subscription : has
+  Subscription "1" -- "1" PricingCategory : belongs to
+

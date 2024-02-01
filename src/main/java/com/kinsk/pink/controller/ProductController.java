@@ -27,7 +27,8 @@ public class ProductController {
     @Operation(summary = "Get All", description = "Retrieve all from the database")
     public ResponseEntity<List<Product>> findAllProducts(){
         System.out.println("R READ");
-        return new ResponseEntity<List<Product>>(productService.findAll(),HttpStatus.OK);
+        return new ResponseEntity<List<Product>>(productService.findAll(),
+                HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -45,7 +46,8 @@ public class ProductController {
             "database")
     public ResponseEntity<Product> postProduct(@RequestBody Product product){
         System.out.println("C CREATE");
-        return new ResponseEntity<Product>(productService.save(product),HttpStatus.OK);
+        return new ResponseEntity<Product>(productService.save(product),
+                HttpStatus.OK);
     }
     @PutMapping
     @Operation(summary = "Update a product", description = "Update a product in the " +
@@ -53,7 +55,8 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct(@RequestBody Product product)
             throws ChangeSetPersister.NotFoundException {
         System.out.println("U UPDATE");
-        return new ResponseEntity<Product>(productService.update(product),HttpStatus.OK);
+        return new ResponseEntity<Product>(productService.update(product),
+                HttpStatus.OK);
     }
 
 

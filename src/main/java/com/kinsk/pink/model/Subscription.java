@@ -17,23 +17,26 @@ public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SUBSCRIPTION_ID")
+    @Schema(hidden = true)
     private Long id;
-
-    @Column(name = "START_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startDate;
 
     @Column(name = "END_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
-    @Column(name = "LAST_UPDATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdate;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     private SubscriptionSTS status;
+
+    @Column(name = "START_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Schema(hidden = true)
+    private Date startDate;
+
+    @Column(name = "LAST_UPDATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Schema(hidden = true)
+    private Date lastUpdate;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")

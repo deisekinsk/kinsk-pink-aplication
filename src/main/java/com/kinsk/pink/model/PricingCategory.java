@@ -1,5 +1,6 @@
 package com.kinsk.pink.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,6 +16,7 @@ public class PricingCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PRICING_CATEGORY_ID")
+    @Schema(hidden = true)
     private Long id;
     @Column(name = "NAME")
     private String name;
