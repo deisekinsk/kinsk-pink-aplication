@@ -1,12 +1,10 @@
 package com.kinsk.pink.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "SUBSCRIPTION")
@@ -28,11 +26,18 @@ public class Subscription {
     private Date startDate;
 
     @Column(name = "END_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Schema(hidden = true)
     private Date endDate;
 
     @Column(name = "LAST_UPDATE")
     @Temporal(TemporalType.TIMESTAMP)
     @Schema(hidden = true)
     private Date lastUpdate;
+
+    //set a value, null is not available
+    @Column(name = "SUBS_STATUS", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SubscriptionSTS subscriptionSTS;
 
 }

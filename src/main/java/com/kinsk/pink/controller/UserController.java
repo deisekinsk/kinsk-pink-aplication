@@ -49,11 +49,11 @@ public class UserController {
         return new ResponseEntity<>(user1,HttpStatus.OK);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Operation(summary = "Update a user", description = "Update a user in the database")
-    public ResponseEntity<User> updateUser(@RequestBody User user)
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user)
         throws NotFoundException{
-        User userUpdate = userService.update(user);
+        User userUpdate = userService.update(id,user);
         System.out.println("U UPDATE | startUser " + userUpdate.getStartUser());
         System.out.println("U UPDATE | lastUpdate " + userUpdate.getLastUpdate());
         return new ResponseEntity<>(userUpdate,HttpStatus.OK);

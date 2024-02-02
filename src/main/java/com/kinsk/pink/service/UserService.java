@@ -4,7 +4,6 @@ import com.kinsk.pink.model.User;
 import com.kinsk.pink.repository.UserRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.webjars.NotFoundException;
 
 import java.util.Date;
@@ -26,7 +25,7 @@ public class UserService {
     }
 
 
-    public User findUserById (@PathVariable Long id) {
+    public User findUserById (Long id) {
         if (id!=null){
             Optional<User> userOpt = userRespository.findById(id);
             return userOpt.get();
@@ -42,9 +41,9 @@ public class UserService {
         return userRespository.save(user);
     }
 
-    public User update(User user) throws NotFoundException{
+    public User update(Long id, User user) throws NotFoundException{
 
-        User u = findUserById(user.getId());
+        User u = findUserById(id);
         if(u != null) {
             return userRespository.save(conversion(user, u));
         } else {
@@ -60,11 +59,13 @@ public class UserService {
             u.setStartUser(u.getStartUser());
             // Update the last update date to the current time
             u.setLastUpdate(new Date());
+
+            // Returns the same User object with updated properties
             return u;
         }
 
     //@SneakyThrows // Code that throws a checked exception
-    public void deleteById (@PathVariable Long id) throws NotFoundException{
+    public void deleteById (Long id) throws NotFoundException{
         Optional<User> userOpt = userRespository.findById(id);
         if(userOpt.isPresent()){
             userRespository.deleteById(id);

@@ -45,4 +45,20 @@ public class SubscriptionController {
         Subscription createdSubscription = subscriptionService.save(subscription);
         return ResponseEntity.ok(createdSubscription);
     }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update a subscription", description = "Update a subscription in the database")
+    public ResponseEntity<Subscription> updateSubs(@PathVariable Long id, @RequestBody Subscription subscription) {
+        Subscription subsUpdate = subscriptionService.update(id, subscription);
+        return new ResponseEntity<>(subsUpdate, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete/Update a subscription", description = "Change a subscription " +
+            "status and endDate")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        subscriptionService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
