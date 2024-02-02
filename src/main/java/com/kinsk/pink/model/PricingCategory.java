@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "PRICING_CATEGORY")
@@ -26,5 +27,8 @@ public class PricingCategory {
     private Double discount;
     @Column(name = "USAGE_RATE")
     private Double usageRate;
+
+
+
 }
 

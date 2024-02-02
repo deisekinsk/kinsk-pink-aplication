@@ -40,4 +40,10 @@ public class Subscription {
     @Enumerated(EnumType.STRING)
     private SubscriptionSTS subscriptionSTS;
 
+    // Many-to-one relationship with PricingCategory
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PRICING_CATEGORY_ID")
+    private PricingCategory pricingCategory;
+
+
 }

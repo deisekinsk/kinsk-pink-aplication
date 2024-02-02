@@ -17,6 +17,9 @@ public class SubscriptionService {
     @Autowired
     private SubscriptionRespository subscriptionRespository;
 
+    @Autowired
+    private PrincingCategoryService pricingCategoryService;
+
 
     public SubscriptionService(SubscriptionRespository subscriptionRespository){
         this.subscriptionRespository = subscriptionRespository;
@@ -35,15 +38,23 @@ public class SubscriptionService {
 
     public Subscription save(Subscription subscription)
             throws ChangeSetPersister.NotFoundException {
+        // Change startDate e lastUpdate
         if (subscription.getStartDate() == null) {
             subscription.setStartDate(new Date());
             subscription.setLastUpdate(new Date());
         }
-
+        // SubscriptionSTS.ACTIVE
         if (subscription.getSubscriptionSTS() == null) {
-            // SubscriptionSTS.ACTIVE
+
             subscription.setSubscriptionSTS(SubscriptionSTS.ACTIVE);
         }
+        // PricingCategory
+        if (subscription.getPricingCategory() != null) {
+            PricingCategory pricingCategory = pricingCategoryService.findPricingById(subscription.getPricingCategory().getId());
+            pricingCategoryService.save(pricingCategory);
+            subscription.setPricingCategory(pricingCategory);
+        }
+
         return subscriptionRespository.save(subscription);
     }
 
@@ -57,12 +68,12 @@ public class SubscriptionService {
     }
 
     public Subscription conversion(Subscription subscription, Subscription subsAux){
-        //Update subscription status
-        subsAux.setSubscriptionSTS(subscription.getSubscriptionSTS());
         //Preserve the original startDate
         subsAux.setStartDate(subsAux.getStartDate());
         // Update the last update date to the current time
         subsAux.setLastUpdate(new Date());
+        //Update subscription status
+        subsAux.setSubscriptionSTS(subscription.getSubscriptionSTS());
 
         return subsAux;
     }
