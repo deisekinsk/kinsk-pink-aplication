@@ -27,8 +27,4 @@ public class Product {
     private String name;
 
 
-    @OneToMany(mappedBy = "product")
-    @Schema(hidden = true)
-    private List<Subscription> subscriptions = new ArrayList<>();
-
 }

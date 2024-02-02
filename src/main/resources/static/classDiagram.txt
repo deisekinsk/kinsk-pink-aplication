@@ -1,5 +1,9 @@
 Pink aplication
 
+SWAGGER: http://localhost:8080/swagger-ui/index.html
+DOC AULA: https://glysns.gitbook.io/spring-framework/spring-web/swagger
+H2: http://localhost:8080/h2-console/login.jsp?
+
     Um usuário pode adquirir vários produtos.
     Ao adquirir um produto, é obrigatório ter uma assinatura.
     Cada assinatura é associada a uma categoria de preço específica.

@@ -2,15 +2,15 @@ package com.kinsk.pink.controller;
 
 
 import com.kinsk.pink.model.PricingCategory;
-import com.kinsk.pink.model.Product;
 import com.kinsk.pink.service.PrincingCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.webjars.NotFoundException;
 
 import java.util.List;
 

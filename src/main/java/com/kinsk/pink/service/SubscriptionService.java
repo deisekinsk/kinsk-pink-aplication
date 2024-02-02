@@ -1,8 +1,9 @@
 package com.kinsk.pink.service;
 
-import com.kinsk.pink.model.Subscription;
+import com.kinsk.pink.model.*;
 import com.kinsk.pink.repository.SubscriptionRespository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ public class SubscriptionService {
     @Autowired
     private SubscriptionRespository subscriptionRespository;
 
+
     public SubscriptionService(SubscriptionRespository subscriptionRespository){
         this.subscriptionRespository = subscriptionRespository;
     }
@@ -22,12 +24,15 @@ public class SubscriptionService {
         return subscriptionRespository.findAll();
     }
 
-    public Subscription save(Subscription subscription){
-
-        if(subscription.getStartDate() ==null){
+    public Subscription save(Subscription subscription)
+            throws ChangeSetPersister.NotFoundException {
+        if (subscription.getStartDate() == null) {
             subscription.setStartDate(new Date());
         }
 
         return subscriptionRespository.save(subscription);
+
     }
 }
+
+

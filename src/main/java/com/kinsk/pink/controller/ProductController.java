@@ -34,10 +34,10 @@ public class ProductController {
     @GetMapping("/{id}")
     @Operation(summary = "Get a product By Id", description = "Retrieve a product from the" +
             " database by ID")
-    public ResponseEntity<List<Product>> findById(@PathVariable Long id)
+    public ResponseEntity<Product> findById(@PathVariable Long id)
             throws ChangeSetPersister.NotFoundException {
         System.out.println("R READ BY ID");
-        return new ResponseEntity(productService.findProductById(id),
+        return new ResponseEntity<Product>(productService.findProductById(id),
                 HttpStatus.OK);
     }
 

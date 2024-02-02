@@ -35,10 +35,10 @@ public class UserController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a user By Id", description = "Retrieve a user from the database by ID")
-    public ResponseEntity<List<User>> findById(@PathVariable Long id)
+    public ResponseEntity<User> findById(@PathVariable Long id)
             throws NotFoundException {
         System.out.println("R READ BY ID");
-        return new ResponseEntity(userService.findUserById(id),HttpStatus.OK);
+        return new ResponseEntity<User>(userService.findUserById(id),HttpStatus.OK);
     }
 
     @PostMapping

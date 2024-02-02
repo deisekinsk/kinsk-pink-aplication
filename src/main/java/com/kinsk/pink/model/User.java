@@ -37,7 +37,4 @@ public class User {
     @Schema(hidden = true)
     private Date lastUpdate;
 
-    @OneToMany(mappedBy = "user")
-    @Schema(hidden = true)
-    private List<Subscription> subscriptions = new ArrayList<>();
 }
