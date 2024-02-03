@@ -37,4 +37,9 @@ public class User {
     @Schema(hidden = true)
     private Date lastUpdate;
 
+    // One-to-many relationship with Subscription
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Schema(hidden = true)
+    private List<Subscription> subscriptions;
+
 }

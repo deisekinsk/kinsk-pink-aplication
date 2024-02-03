@@ -51,6 +51,12 @@ public class Subscription {
     @JoinColumn(name = "PRODUCT_ID")
     @Schema(hidden = true)
     private Product product;
+
+    // Many-to-one relationship with User
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_ID")
+    @Schema(hidden = true)
+    private User user;
     
 
 }

@@ -1,9 +1,6 @@
 package com.kinsk.pink.service;
 
-import com.kinsk.pink.model.PricingCategory;
-import com.kinsk.pink.model.Product;
-import com.kinsk.pink.model.Subscription;
-import com.kinsk.pink.model.SubscriptionSTS;
+import com.kinsk.pink.model.*;
 import com.kinsk.pink.repository.SubscriptionRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -26,6 +23,9 @@ public class SubscriptionService {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserService userService;
+
 
     public SubscriptionService(SubscriptionRespository subscriptionRespository){
         this.subscriptionRespository = subscriptionRespository;
@@ -44,7 +44,8 @@ public class SubscriptionService {
         }
     }
 
-    public Subscription save(Subscription subscription, Long pricingCategoryId, Long productId)
+    public Subscription save(Subscription subscription, Long pricingCategoryId,
+                             Long productId, Long userId)
             throws ChangeSetPersister.NotFoundException {
         // Set startDate and lastUpdate if not provided.
         if (subscription.getStartDate() == null) {
@@ -70,6 +71,14 @@ public class SubscriptionService {
             subscription.setProduct(product);
         } else {
             throw new RuntimeException("ProductId is required");
+        }
+
+        // User | Associate the Subscription with a User.
+        if (userId != null) {
+            User user = userService.findUserById(userId);
+            subscription.setUser(user);
+        } else {
+            throw new RuntimeException("UserId is required");
         }
 
         return subscriptionRespository.save(subscription);

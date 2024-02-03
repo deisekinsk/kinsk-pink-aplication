@@ -46,10 +46,11 @@ public class SubscriptionController {
             "database")
     public ResponseEntity<Subscription> postSubscription(@PathVariable Long pricingCategoryId,
                                                          @RequestParam(required = false) Long productId,
+                                                         @RequestParam(required = false) Long userId,
                                                          @RequestBody Subscription subscription)
             throws ChangeSetPersister.NotFoundException {
         Subscription createdSubscription = subscriptionService.save(subscription,
-                pricingCategoryId, productId);
+                pricingCategoryId, productId, userId);
         System.out.println("C CREATE Subscription id nº " + createdSubscription.getId());
         return ResponseEntity.ok(createdSubscription);
     }
