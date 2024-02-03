@@ -29,6 +29,5 @@ public class PricingCategory {
     private Double usageRate;
 
 
-
 }
 

@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,6 +24,11 @@ public class Product {
 
     @Column(name = "NAME")
     private String name;
+
+    // Represents all subscriptions associated with this product.
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @Schema(hidden = true)
+    private List<Subscription> subscriptions;
 
 
 }

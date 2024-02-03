@@ -1,6 +1,9 @@
 package com.kinsk.pink.service;
 
-import com.kinsk.pink.model.*;
+import com.kinsk.pink.model.PricingCategory;
+import com.kinsk.pink.model.Product;
+import com.kinsk.pink.model.Subscription;
+import com.kinsk.pink.model.SubscriptionSTS;
 import com.kinsk.pink.repository.SubscriptionRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -20,6 +23,9 @@ public class SubscriptionService {
     @Autowired
     private PrincingCategoryService pricingCategoryService;
 
+    @Autowired
+    private ProductService productService;
+
 
     public SubscriptionService(SubscriptionRespository subscriptionRespository){
         this.subscriptionRespository = subscriptionRespository;
@@ -29,30 +35,41 @@ public class SubscriptionService {
         return subscriptionRespository.findAll();
     }
 
-    public Subscription findSubsById( Long id){
-        if(id != null){
+    public Subscription findSubsById(Long id) throws NotFoundException {
+        if (id != null) {
             Optional<Subscription> subsOpt = subscriptionRespository.findById(id);
-            return  subsOpt.get();
-        }else throw new RuntimeException("Subscription ID not found");
+            return subsOpt.orElseThrow(() -> new NotFoundException("Subscription not found with ID: " + id));
+        } else {
+            throw new IllegalArgumentException("Subscription ID cannot be null");
+        }
     }
 
-    public Subscription save(Subscription subscription)
+    public Subscription save(Subscription subscription, Long pricingCategoryId, Long productId)
             throws ChangeSetPersister.NotFoundException {
-        // Change startDate e lastUpdate
+        // Set startDate and lastUpdate if not provided.
         if (subscription.getStartDate() == null) {
             subscription.setStartDate(new Date());
             subscription.setLastUpdate(new Date());
         }
-        // SubscriptionSTS.ACTIVE
+        // Set Subscription Status to ACTIVE if not provided.
         if (subscription.getSubscriptionSTS() == null) {
 
             subscription.setSubscriptionSTS(SubscriptionSTS.ACTIVE);
         }
-        // PricingCategory
-        if (subscription.getPricingCategory() != null) {
-            PricingCategory pricingCategory = pricingCategoryService.findPricingById(subscription.getPricingCategory().getId());
-            pricingCategoryService.save(pricingCategory);
+        // PricingCategory | // Associate the Subscription with a PricingCategory.
+        if (pricingCategoryId != null) {
+            PricingCategory pricingCategory = pricingCategoryService.findPricingById(pricingCategoryId);
             subscription.setPricingCategory(pricingCategory);
+        } else {
+            throw new RuntimeException("PricingCategoryId is required");
+        }
+
+        //Product | // Associate the Subscription with a Product.
+        if (productId != null) {
+            Product product = productService.findProductById(productId);
+            subscription.setProduct(product);
+        } else {
+            throw new RuntimeException("ProductId is required");
         }
 
         return subscriptionRespository.save(subscription);
@@ -77,7 +94,6 @@ public class SubscriptionService {
 
         return subsAux;
     }
-
 
     public void deleteById(Long id) {
         Subscription subsID = findSubsById(id);

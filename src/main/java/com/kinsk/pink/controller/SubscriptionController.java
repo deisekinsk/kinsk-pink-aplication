@@ -1,16 +1,9 @@
 package com.kinsk.pink.controller;
 
 
-import com.kinsk.pink.model.PricingCategory;
-import com.kinsk.pink.model.Product;
 import com.kinsk.pink.model.Subscription;
-import com.kinsk.pink.model.User;
 import com.kinsk.pink.service.SubscriptionService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -33,16 +26,31 @@ public class SubscriptionController {
     @GetMapping
     @Operation(summary = "Get All", description = "Retrieve all subscriptions from the database")
     public ResponseEntity<List<Subscription>> findAll(){
+        System.out.println("R READ Subscription");
         return new ResponseEntity<List<Subscription>>(subscriptionService.findAll(),
                 HttpStatus.OK);
     }
 
-    @PostMapping
+
+//    @GetMapping("/{id}")
+//    @Operation(summary = "Get a user By Id", description = "Retrieve a user from the database by ID")
+//    public ResponseEntity<User> findById(@PathVariable Long id)
+//            throws NotFoundException {
+//        System.out.println("R READ BY ID");
+//        return new ResponseEntity<User>(userService.findUserById(id),HttpStatus.OK);
+//    }
+
+
+    @PostMapping("/{pricingCategoryId}")
     @Operation(summary = "Create a subscription", description = "Add a new subscription to the " +
             "database")
-    public ResponseEntity<Subscription> postSubscription(@RequestBody Subscription subscription)
+    public ResponseEntity<Subscription> postSubscription(@PathVariable Long pricingCategoryId,
+                                                         @RequestParam(required = false) Long productId,
+                                                         @RequestBody Subscription subscription)
             throws ChangeSetPersister.NotFoundException {
-        Subscription createdSubscription = subscriptionService.save(subscription);
+        Subscription createdSubscription = subscriptionService.save(subscription,
+                pricingCategoryId, productId);
+        System.out.println("C CREATE Subscription id nº " + createdSubscription.getId());
         return ResponseEntity.ok(createdSubscription);
     }
 
@@ -50,6 +58,8 @@ public class SubscriptionController {
     @Operation(summary = "Update a subscription", description = "Update a subscription in the database")
     public ResponseEntity<Subscription> updateSubs(@PathVariable Long id, @RequestBody Subscription subscription) {
         Subscription subsUpdate = subscriptionService.update(id, subscription);
+        System.out.println("U UPDATE Subscription | startUser " + subsUpdate.getStartDate());
+        System.out.println("         Subscription| lastUpdate " + subsUpdate.getLastUpdate());
         return new ResponseEntity<>(subsUpdate, HttpStatus.OK);
     }
 
@@ -58,6 +68,7 @@ public class SubscriptionController {
             "status and endDate")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         subscriptionService.deleteById(id);
+        System.out.println("D DELETE Subscription " + id);
         return ResponseEntity.ok().build();
     }
 

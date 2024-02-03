@@ -35,15 +35,22 @@ public class Subscription {
     @Schema(hidden = true)
     private Date lastUpdate;
 
-    //set a value, null is not available
+    // Indicates the subscription status and ensures it is not nullable.
     @Column(name = "SUBS_STATUS", nullable = false)
     @Enumerated(EnumType.STRING)
     private SubscriptionSTS subscriptionSTS;
 
-    // Many-to-one relationship with PricingCategory
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Establishes a many-to-one relationship with PricingCategory.
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PRICING_CATEGORY_ID")
+    @Schema(hidden = true)
     private PricingCategory pricingCategory;
 
+    // Represents the product associated with this subscription.
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "PRODUCT_ID")
+    @Schema(hidden = true)
+    private Product product;
+    
 
 }

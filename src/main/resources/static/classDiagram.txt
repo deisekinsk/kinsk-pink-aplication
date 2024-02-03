@@ -14,7 +14,6 @@ H2: http://localhost:8080/h2-console/login.jsp?
 
 
 
-
 classDiagram
   class User {
     +Long id
@@ -28,7 +27,7 @@ classDiagram
   class Product {
     +Long id
     +String name
-    +List<Subscription> subscriptions
+    -List<Subscription> subscriptions
   }
 
   class SubscriptionStatus {
@@ -55,9 +54,10 @@ classDiagram
     +double fixedRate
     +double discount
     +double usageRate
+    -List<Subscription> subscriptions
   }
 
   User "1" -- "0..*" Subscription : has
   Product "1" -- "0..*" Subscription : has
-  Subscription "1" -- "1" PricingCategory : belongs to
+  Subscription "0..1" -- "1" PricingCategory : belongs to
 
