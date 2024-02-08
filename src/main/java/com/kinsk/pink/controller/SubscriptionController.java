@@ -9,6 +9,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.webjars.NotFoundException;
 
 import java.util.List;
 
@@ -32,13 +33,20 @@ public class SubscriptionController {
     }
 
 
-//    @GetMapping("/{id}")
-//    @Operation(summary = "Get a user By Id", description = "Retrieve a user from the database by ID")
-//    public ResponseEntity<User> findById(@PathVariable Long id)
-//            throws NotFoundException {
-//        System.out.println("R READ BY ID");
-//        return new ResponseEntity<User>(userService.findUserById(id),HttpStatus.OK);
-//    }
+    @GetMapping("/{id}")
+    @Operation(summary = "Get a user By Id", description = "Retrieve a user from the database by ID")
+    public ResponseEntity<Subscription> findById(@PathVariable Long id) {
+        System.out.println("R READ BY ID");
+        Subscription subsById = subscriptionService.findSubsById(id);
+        if (subsById != null) {
+            //cover unuseful response
+            subsById.getProduct().setSubscriptions(null);
+            subsById.getUser().setPass("*****");
+            return ResponseEntity.ok(subsById);
+        } else {
+            throw new NotFoundException("User not found with ID: " + id);
+        }
+    }
 
 
     @PostMapping("/{pricingCategoryId}")
@@ -58,6 +66,7 @@ public class SubscriptionController {
     @PutMapping("/{id}")
     @Operation(summary = "Update a subscription", description = "Update a subscription in the database")
     public ResponseEntity<Subscription> updateSubs(@PathVariable Long id, @RequestBody Subscription subscription) {
+
         Subscription subsUpdate = subscriptionService.update(id, subscription);
         System.out.println("U UPDATE Subscription | startUser " + subsUpdate.getStartDate());
         System.out.println("         Subscription| lastUpdate " + subsUpdate.getLastUpdate());
@@ -68,8 +77,9 @@ public class SubscriptionController {
     @Operation(summary = "Delete/Update a subscription", description = "Change a subscription " +
             "status and endDate")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+
         subscriptionService.deleteById(id);
-        System.out.println("D DELETE Subscription " + id);
+        System.out.println("D DELETE Subscription nº" + id);
         return ResponseEntity.ok().build();
     }
 

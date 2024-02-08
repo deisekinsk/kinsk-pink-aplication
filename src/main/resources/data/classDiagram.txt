@@ -1,17 +1,12 @@
-Pink aplication
+Pink Application
 
 SWAGGER: http://localhost:8080/swagger-ui/index.html
-DOC AULA: https://glysns.gitbook.io/spring-framework/spring-web/swagger
+LESSON DOC: https://glysns.gitbook.io/spring-framework/spring-web/swagger
 H2: http://localhost:8080/h2-console/login.jsp?
 
-    Um usuário pode adquirir vários produtos.
-    Ao adquirir um produto, é obrigatório ter uma assinatura.
-    Cada assinatura é associada a uma categoria de preço específica.
-
-    Um User pode ter várias Subscription.
-    Um Product pode ter várias Subscription.
-    Cada Subscription pertence a uma PricingCategory específica, que representa a categoria de preço da assinatura.
-
+    A user can acquire multiple products.
+    When acquiring a product, having a subscription is mandatory.
+    Each subscription is associated with a specific price category.
 
 
 classDiagram

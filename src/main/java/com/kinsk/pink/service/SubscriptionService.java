@@ -1,5 +1,6 @@
 package com.kinsk.pink.service;
 
+import com.kinsk.pink.handler.BusinessException;
 import com.kinsk.pink.model.*;
 import com.kinsk.pink.repository.SubscriptionRespository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class SubscriptionService {
         return subscriptionRespository.findAll();
     }
 
-    public Subscription findSubsById(Long id) throws NotFoundException {
+    public Subscription findSubsById(Long id) {
         if (id != null) {
             Optional<Subscription> subsOpt = subscriptionRespository.findById(id);
             return subsOpt.orElseThrow(() -> new NotFoundException("Subscription not found with ID: " + id));
@@ -108,16 +109,23 @@ public class SubscriptionService {
         Subscription subsID = findSubsById(id);
 
         if (subsID != null) {
-            // SubscriptionSTS.CANCEL
-            subsID.setSubscriptionSTS(SubscriptionSTS.CANCEL);
-            // Update the last update date to the current time
-            subsID.setLastUpdate(new Date());
-            subsID.setEndDate(new Date());
-            subscriptionRespository.save(subsID);
+            // Check if the subscription status is not "CANCEL"
+            if (!SubscriptionSTS.CANCEL.equals(subsID.getSubscriptionSTS())) {
+                // If not "CANCEL", update the status, last update date, and end date
+                subsID.setSubscriptionSTS(SubscriptionSTS.CANCEL);
+                subsID.setLastUpdate(new Date());
+                subsID.setEndDate(new Date());
+                subscriptionRespository.save(subsID);
+            } else {
+                // If the status is "CANCEL", throw an exception indicating that the subscription cannot be deleted
+                throw new BusinessException("Subscription with status 'CANCEL' cannot be " +
+                        "canceled again.");
+            }
         } else {
             throw new RuntimeException("Subscription ID not found");
         }
     }
+
 
 }
 
