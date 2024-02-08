@@ -1,0 +1,1 @@
+# kinsk-pink-aplication
