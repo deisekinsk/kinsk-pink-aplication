@@ -66,6 +66,7 @@ No uso uso de dependências, foram encontrados conflitos no uso do openapi na ve
 			<version>2.0.2</version>
 		</dependency>
 
+
 Após o ajuste foi possível verificar a documentação da API produzida no Swagger. Com a depência e ajustes na camada do Controller foi possível configurar o request/response para ser executado diretamente pelo Swagger.
 
 #### . API documentada com Swagger
