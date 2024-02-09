@@ -68,10 +68,11 @@ GROUP BY
 
 -- Retrieve subscription details along with user name, product name, and pricing category name
 SELECT
-    SUB.START_DATE,
     SUB.END_DATE,
+    SUB.START_DATE,
     SUB.LAST_UPDATE,
     SUB.SUBS_STATUS,
+    SUB.SUBSCRIPTION_ID,
     PC.NAME AS PRICING_CATEGORY,
     PR.NAME AS PRODUCT,
     USR.NAME AS USER_NAME
@@ -83,3 +84,4 @@ JOIN
     PRODUCT PR ON SUB.PRODUCT_ID = PR.PRODUCT_ID
 JOIN
     PINKUSER USR ON SUB.USER_ID = USR.USER_ID;
+
